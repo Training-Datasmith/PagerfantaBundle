@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace BabDev\PagerfantaBundle\Serializer\Normalizer;
 
@@ -13,7 +15,9 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
  */
 final class LegacyPagerfantaNormalizer implements NormalizerInterface, CacheableSupportsMethodInterface, NormalizerAwareInterface
 {
-    public function __construct(private readonly PagerfantaNormalizer $normalizer) {}
+    public function __construct(private readonly PagerfantaNormalizer $normalizer)
+    {
+    }
 
     public function setNormalizer(NormalizerInterface $normalizer): void
     {

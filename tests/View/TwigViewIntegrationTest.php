@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace BabDev\PagerfantaBundle\Tests\View;
 
@@ -425,8 +427,10 @@ final class TwigViewIntegrationTest extends TestCase
 
     private function createRuntimeLoader(): RuntimeLoaderInterface
     {
-        return new class($this) implements RuntimeLoaderInterface {
-            public function __construct(private readonly TwigViewIntegrationTest $testCase) {}
+        return new class ($this) implements RuntimeLoaderInterface {
+            public function __construct(private readonly TwigViewIntegrationTest $testCase)
+            {
+            }
 
             /**
              * @param string $class

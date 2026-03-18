@@ -1,7 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace BabDev\PagerfantaBundle\Exception;
 
 use Pagerfanta\Exception\RuntimeException;
 
-final class ImmutableViewFactoryException extends RuntimeException {}
+final class ImmutableViewFactoryException extends RuntimeException
+{
+}

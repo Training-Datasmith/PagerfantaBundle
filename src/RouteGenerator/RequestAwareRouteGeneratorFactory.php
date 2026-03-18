@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace BabDev\PagerfantaBundle\RouteGenerator;
 
@@ -16,7 +18,8 @@ final class RequestAwareRouteGeneratorFactory implements RouteGeneratorFactoryIn
         private readonly UrlGeneratorInterface $router,
         private readonly RequestStack $requestStack,
         private readonly PropertyAccessorInterface $propertyAccessor
-    ) {}
+    ) {
+    }
 
     public function create(array $options = []): RouteGeneratorInterface
     {

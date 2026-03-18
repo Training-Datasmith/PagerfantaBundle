@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace BabDev\PagerfantaBundle\Tests\View;
 
@@ -72,15 +74,17 @@ final class ContainerBackedImmutableViewFactoryTest extends TestCase
      */
     private function createContainer(array $views): ContainerInterface
     {
-        return new class($views) implements ContainerInterface {
+        return new class ($views) implements ContainerInterface {
             /**
              * @param array<string, ViewInterface> $views
              */
-            public function __construct(private readonly array $views) {}
+            public function __construct(private readonly array $views)
+            {
+            }
 
             public function get(string $id)
             {
-                return $this->views[$id] ?? throw new class extends \RuntimeException implements NotFoundExceptionInterface {};
+                return $this->views[$id] ?? throw new class () extends \RuntimeException implements NotFoundExceptionInterface {};
             }
 
             public function has(string $id): bool
