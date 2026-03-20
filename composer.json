@@ -2,7 +2,11 @@
     "name": "babdev/pagerfanta-bundle",
     "type": "symfony-bundle",
     "description": "Bundle integrating Pagerfanta with Symfony",
-    "keywords": ["pagerfanta", "pagination", "symfony"],
+    "keywords": [
+        "pagerfanta",
+        "pagination",
+        "symfony"
+    ],
     "license": "MIT",
     "require": {
         "php": "^8.1",
@@ -50,12 +54,12 @@
     },
     "autoload": {
         "psr-4": {
-            "BabDev\\PagerfantaBundle\\": "src/"
+            "Bab_Dev\\Pagerfanta_Bundle\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "BabDev\\PagerfantaBundle\\Tests\\": "tests/"
+            "Bab_Dev\\Pagerfanta_Bundle\\Tests\\": "tests/"
         }
     },
     "config": {
