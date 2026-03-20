@@ -1,25 +1,21 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types=1);
+namespace Bab_Dev\Pagerfanta_Bundle\Dependency_Injection\Compiler_Pass;
 
-namespace BabDev\PagerfantaBundle\DependencyInjection\CompilerPass;
-
-use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Reference;
-
+use Symfony\Component\Dependency_Injection\Compiler\Compiler_Pass_Interface;
+use Symfony\Component\Dependency_Injection\Container_Builder;
+use Symfony\Component\Dependency_Injection\Reference;
 /**
  * @internal
  */
-final class RegisterTwigUndefinedCallablePass implements CompilerPassInterface
+final class Register_Twig_Undefined_Callable_Pass implements Compiler_Pass_Interface
 {
-    public function process(ContainerBuilder $container): void
+    public function process(Container_Builder $container): void
     {
-        if (!$container->hasDefinition('twig')) {
+        if (!$container->has_definition('twig')) {
             return;
         }
-
-        $container->getDefinition('twig')
-            ->addMethodCall('registerUndefinedFunctionCallback', [[new Reference('pagerfanta.undefined_callable_handler'), 'onUndefinedFunction']]);
+        $container->get_definition('twig')->add_method_call('registerUndefinedFunctionCallback', [[new Reference('pagerfanta.undefined_callable_handler'), 'onUndefinedFunction']]);
     }
 }

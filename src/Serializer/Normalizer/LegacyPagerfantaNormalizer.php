@@ -1,40 +1,34 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types=1);
+namespace Bab_Dev\Pagerfanta_Bundle\Serializer\Normalizer;
 
-namespace BabDev\PagerfantaBundle\Serializer\Normalizer;
-
-use Symfony\Component\Serializer\Normalizer\CacheableSupportsMethodInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-
+use Symfony\Component\Serializer\Normalizer\Cacheable_Supports_Method_Interface;
+use Symfony\Component\Serializer\Normalizer\Normalizer_Aware_Interface;
+use Symfony\Component\Serializer\Normalizer\Normalizer_Interface;
 /**
  * Decorator for {@see PagerfantaNormalizer} implementing the legacy {@CacheableSupportsMethodInterface} for older Symfony version support.
  *
  * @internal
  */
-final class LegacyPagerfantaNormalizer implements NormalizerInterface, CacheableSupportsMethodInterface, NormalizerAwareInterface
+final class Legacy_Pagerfanta_Normalizer implements Normalizer_Interface, Cacheable_Supports_Method_Interface, Normalizer_Aware_Interface
 {
-    public function __construct(private readonly PagerfantaNormalizer $normalizer)
+    public function __construct(private readonly Pagerfanta_Normalizer $normalizer)
     {
     }
-
-    public function setNormalizer(NormalizerInterface $normalizer): void
+    public function set_normalizer(Normalizer_Interface $normalizer): void
     {
-        $this->normalizer->setNormalizer($normalizer);
+        $this->normalizer->set_normalizer($normalizer);
     }
-
     public function normalize(mixed $object, ?string $format = null, array $context = []): array
     {
         return $this->normalizer->normalize($object, $format, $context);
     }
-
-    public function supportsNormalization(mixed $data, ?string $format = null, array $context = []): bool
+    public function supports_normalization(mixed $data, ?string $format = null, array $context = []): bool
     {
-        return $this->normalizer->supportsNormalization($data, $format, $context);
+        return $this->normalizer->supports_normalization($data, $format, $context);
     }
-
-    public function hasCacheableSupportsMethod(): bool
+    public function has_cacheable_supports_method(): bool
     {
         return true;
     }

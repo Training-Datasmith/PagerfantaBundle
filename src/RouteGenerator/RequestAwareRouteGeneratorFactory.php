@@ -1,66 +1,40 @@
 <?php
 
-declare(strict_types=1);
-
-namespace BabDev\PagerfantaBundle\RouteGenerator;
+declare (strict_types=1);
+namespace Bab_Dev\Pagerfanta_Bundle\Route_Generator;
 
 use Pagerfanta\Exception\RuntimeException;
-use Pagerfanta\RouteGenerator\RouteGeneratorFactoryInterface;
-use Pagerfanta\RouteGenerator\RouteGeneratorInterface;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-
-final class RequestAwareRouteGeneratorFactory implements RouteGeneratorFactoryInterface
+use Pagerfanta\Route_Generator\Route_Generator_Factory_Interface;
+use Pagerfanta\Route_Generator\Route_Generator_Interface;
+use Symfony\Component\Http_Foundation\Request;
+use Symfony\Component\Http_Foundation\Request_Stack;
+use Symfony\Component\Property_Access\Property_Accessor_Interface;
+use Symfony\Component\Routing\Generator\Url_Generator_Interface;
+final class Request_Aware_Route_Generator_Factory implements Route_Generator_Factory_Interface
 {
-    public function __construct(
-        private readonly UrlGeneratorInterface $router,
-        private readonly RequestStack $requestStack,
-        private readonly PropertyAccessorInterface $propertyAccessor
-    ) {
-    }
-
-    public function create(array $options = []): RouteGeneratorInterface
+    public function __construct(private readonly Url_Generator_Interface $router, private readonly Request_Stack $request_stack, private readonly Property_Accessor_Interface $property_accessor)
     {
-        $options = array_replace(
-            [
-                'routeName' => null,
-                'routeParams' => [],
-                'pageParameter' => '[page]',
-                'omitFirstPage' => false,
-            ],
-            $options
-        );
-
+    }
+    public function create(array $options = []): Route_Generator_Interface
+    {
+        $options = array_replace(['routeName' => null, 'routeParams' => [], 'pageParameter' => '[page]', 'omitFirstPage' => false], $options);
         if (null === $options['routeName']) {
-            $request = $this->getRequest();
-
+            $request = $this->get_request();
             if (null === $request) {
                 throw new RuntimeException('The request aware route generator can not be used when there is not an active request.');
             }
-
-            if (null !== $this->requestStack->getParentRequest()) {
+            if (null !== $this->request_stack->get_parent_request()) {
                 throw new RuntimeException('The request aware route generator can not guess the route when used in a sub-request, pass the "routeName" option to use this generator.');
             }
-
             $options['routeName'] = $request->attributes->get('_route');
-
             // Make sure we read the route parameters from the passed option array
-            $defaultRouteParams = array_merge($request->query->all(), $request->attributes->get('_route_params', []));
-
-            $options['routeParams'] = array_merge($defaultRouteParams, $options['routeParams']);
+            $default_route_params = array_merge($request->query->all(), $request->attributes->get('_route_params', []));
+            $options['routeParams'] = array_merge($default_route_params, $options['routeParams']);
         }
-
-        return new RouterAwareRouteGenerator(
-            $this->router,
-            $this->propertyAccessor,
-            $options,
-        );
+        return new Router_Aware_Route_Generator($this->router, $this->property_accessor, $options);
     }
-
-    private function getRequest(): ?Request
+    private function get_request(): ?Request
     {
-        return $this->requestStack->getCurrentRequest();
+        return $this->request_stack->get_current_request();
     }
 }
